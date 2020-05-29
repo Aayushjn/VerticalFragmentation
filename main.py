@@ -1,7 +1,8 @@
-from sys import argv, exit
+import sys
+
+import numpy as np
 
 from bea import get_attribute_affinity_matrix, bond_energy_algorithm
-from matrix import print_matrix
 
 
 def main(file: str):
@@ -11,20 +12,20 @@ def main(file: str):
             num_query = int(f.readline())
             num_sites = int(f.readline())
 
-            attr_usage_matrix = [list(map(int, f.readline().split(' '))) for _ in range(num_query)]
-            query_freq_matrix = [list(map(int, f.readline().split(' '))) for _ in range(num_query)]
-            query_cost_matrix = [list(map(int, f.readline().split(' '))) for _ in range(num_query)]
+            attr_usage_matrix = np.loadtxt(f, np.int, delimiter=' ', max_rows=num_query)
+            query_freq_matrix = np.loadtxt(f, np.int, delimiter=' ', max_rows=num_query)
+            query_cost_matrix = np.loadtxt(f, np.int, delimiter=' ', max_rows=num_query)
     except FileNotFoundError:
         print(f'{file} does not exist!')
-        exit(4)
+        sys.exit(4)
 
     attr_aff_matrix = get_attribute_affinity_matrix(attr_usage_matrix, query_freq_matrix, query_cost_matrix)
     print('Attribute Affinity Matrix')
-    print_matrix(attr_aff_matrix)
+    print(attr_aff_matrix)
 
     clustered_attr_matrix, ordering = bond_energy_algorithm(attr_aff_matrix)
     print('Clustered Attribute Matrix')
-    print_matrix(clustered_attr_matrix)
+    print(clustered_attr_matrix)
     print(f'Attribute order: {ordering}')
 
     # AQ, TQ, BQ, OQ = [], [], [], []
@@ -36,25 +37,15 @@ def main(file: str):
     #     AQ.append(row)
     #
     # for i in range(num_query):
-    #     if AQ[i][1] <= num_attr - 2:
-    #         TQ.append(i)
-    #     elif AQ[i][0] > num_attr - 2:
-    #         BQ.append(i)
-    #     else:
-    #         OQ.append(i)
-    #
-    # print(AQ)
-    # print(TQ)
-    # print(BQ)
-    # print(OQ)
+    #     for j in range(len(AQ[i])):
 
 
 if __name__ == '__main__':
-    if len(argv) == 1:
+    if len(sys.argv) == 1:
         print('Provide a .txt file as argument!')
-        exit(1)
-    elif argv[1].endswith('.txt'):
-        main(argv[1])
+        sys.exit(1)
+    elif sys.argv[1].endswith('.txt'):
+        main(sys.argv[1])
     else:
         print('Must be a .txt file!')
-        exit(2)
+        sys.exit(2)

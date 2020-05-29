@@ -13,3 +13,10 @@ test_2.txt,3/a/3a748286333c7ff315ebfc745b2a0072271bcd31
 	matrix.py,1/8/18d546b822cc0462eb261a06a247e4b354b86e22
 6
 bea.py,0/1/012109bb70d64cbe857eaef70d7484c3847e938e
+E
+.vscode/settings.json,8/9/89aa447020cdcb580cea0495694d46a55941edbe
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
+I
+VerticalFragmentation.iml,1/e/1eff440a28f461c02dfcca1ccc909775d428e295

@@ -1,55 +1,41 @@
-from typing import List
+import numpy as np
 
 
-def print_matrix(matrix: List[List[int]]):
-    """
-    Prints a matrix row by row
-    :param matrix: matrix to be printed
-    """
-    rows = len(matrix)
-    cols = len(matrix[0])
-    for i in range(rows):
-        for j in range(cols):
-            print(matrix[i][j], end=' ')
-        print()
-    print()
-
-
-def up_shift(matrix: List[List[int]]) -> List[List[int]]:
+def up_shift(matrix: np.ndarray) -> np.ndarray:
     """
     Up shifts a square matrix by 1
     :param matrix: input matrix
     :return: up-shifted matrix
     """
-    assert len(matrix) == len(matrix[0])
+    assert matrix.shape[0] == matrix.shape[1]
 
-    rows = len(matrix)
-    first_row = [matrix[0][i] for i in range(rows)]
+    rows = matrix.shape[0]
+    first_row = [matrix[0, i] for i in range(rows)]
 
     for i in range(1, rows):
         for j in range(rows):
-            matrix[i - 1][j] = matrix[i][j]
+            matrix[i - 1, j] = matrix[i, j]
     for j in range(rows):
-        matrix[rows - 1][j] = first_row[j]
+        matrix[rows - 1, j] = first_row[j]
 
     return matrix
 
 
-def left_shift(matrix: List[List[int]]) -> List[List[int]]:
+def left_shift(matrix: np.ndarray) -> np.ndarray:
     """
     Left shifts a square matrix by 1
     :param matrix: input matrix
     :return: left-shifted matrix
     """
-    assert len(matrix) == len(matrix[0])
+    assert matrix.shape[0] == matrix.shape[1]
 
-    rows = len(matrix)
-    first_col = [matrix[i][0] for i in range(rows)]
+    rows = matrix.shape[0]
+    first_col = [matrix[i, 0] for i in range(rows)]
 
     for i in range(rows):
         for j in range(1, rows):
-            matrix[i][j - 1] = matrix[i][j]
+            matrix[i, j - 1] = matrix[i, j]
     for i in range(rows):
-        matrix[i][rows - 1] = first_col[i]
+        matrix[i, rows - 1] = first_col[i]
 
     return matrix

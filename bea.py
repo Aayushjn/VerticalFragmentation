@@ -8,6 +8,7 @@ def get_attribute_affinity_matrix(usage: np.ndarray,
                                   cost: np.ndarray) -> np.ndarray:
     """
     Calculates attribute affinity matrix
+
     :param usage: attribute usage matrix
     :param freq: query frequency matrix
     :param cost: query cost matrix
@@ -26,6 +27,7 @@ def get_attribute_affinity_matrix(usage: np.ndarray,
 def aff(i: int, j: int, usage: np.ndarray, freq: np.ndarray, cost: np.ndarray) -> int:
     """
     Calculates the number of times attributes i and j are accessed together, taking all sites into consideration
+
     :param i: ith attribute
     :param j: jth attribute
     :param usage: attribute usage matrix
@@ -34,19 +36,18 @@ def aff(i: int, j: int, usage: np.ndarray, freq: np.ndarray, cost: np.ndarray) -
     :return: number of times attributes i and j were accessed together
     """
     num_query, num_sites = freq.shape
-    out_sum = 0
+    total = 0
     for k in range(num_query):
         if usage[k, i] == 1 and usage[k, j] == 1:
-            in_sum = 0
             for l in range(num_sites):
-                in_sum += (freq[k, l] * cost[k, l])
-            out_sum += in_sum
-    return out_sum
+                total += (freq[k, l] * cost[k, l])
+    return total
 
 
 def bond_energy_algorithm(affinity: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     """
     Apply bond energy algorithm and derive the clustered attribute matrix
+
     :param affinity: attribute affinity matrix
     :return: clustered attribute matrix and ordering of attributes
     """
@@ -89,6 +90,7 @@ def bond_energy_algorithm(affinity: np.ndarray) -> Tuple[np.ndarray, np.ndarray]
 def cont(i: int, k: int, j: int, affinity: np.ndarray) -> int:
     """
     Calculate contribution of ordering affinity[i], affinity[k], affinity[j]
+
     :param i: ith column
     :param k: kth column
     :param j: jth column
@@ -101,6 +103,7 @@ def cont(i: int, k: int, j: int, affinity: np.ndarray) -> int:
 def bond(x: int, y: int, affinity: np.ndarray) -> int:
     """
     Calculate bond energy between affinity[x] and affinity[y]
+
     :param x: xth column
     :param y: yth column
     :param affinity: attribute affinity matrix

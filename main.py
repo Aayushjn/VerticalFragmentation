@@ -3,6 +3,7 @@ import sys
 import numpy as np
 
 from bea import get_attribute_affinity_matrix, bond_energy_algorithm
+from partition import get_partition_point
 
 
 def main(file: str):
@@ -13,8 +14,18 @@ def main(file: str):
             num_sites = int(f.readline())
 
             attr_usage_matrix = np.loadtxt(f, np.int, delimiter=' ', max_rows=num_query)
+            assert attr_usage_matrix.shape == (num_query, num_attr)
+
             query_freq_matrix = np.loadtxt(f, np.int, delimiter=' ', max_rows=num_query)
+            assert query_freq_matrix.shape == (num_query, num_sites)
+
             query_cost_matrix = np.loadtxt(f, np.int, delimiter=' ', max_rows=num_query)
+            assert query_cost_matrix.shape == (num_query, num_sites)
+    except AssertionError:
+        print(f'Usage matrix must be a ({num_query}x{num_attr}) matrix')
+        print(f'Frequency matrix must be a ({num_query}x{num_sites}) matrix')
+        print(f'Cost matrix must be a ({num_query}x{num_sites}) matrix')
+        sys.exit(3)
     except FileNotFoundError:
         print(f'{file} does not exist!')
         sys.exit(4)
@@ -28,16 +39,10 @@ def main(file: str):
     print(clustered_attr_matrix)
     print(f'Attribute order: {ordering}')
 
-    # AQ, TQ, BQ, OQ = [], [], [], []
-    # for i in range(num_query):
-    #     row = []
-    #     for j in range(num_attr):
-    #         if attr_usage_matrix[i][j] == 1:
-    #             row.append(j)
-    #     AQ.append(row)
-    #
-    # for i in range(num_query):
-    #     for j in range(len(AQ[i])):
+    point = get_partition_point(clustered_attr_matrix, attr_usage_matrix, query_freq_matrix, query_cost_matrix)
+
+    TA = ordering[:point + 1]
+    BA = ordering[point + 1:]
 
 
 if __name__ == '__main__':

@@ -39,7 +39,7 @@ def main(file: str):
     print(clustered_attr_matrix)
     print(f'Attribute order: {ordering}')
 
-    point = get_partition_point(clustered_attr_matrix, attr_usage_matrix, query_freq_matrix, query_cost_matrix)
+    point = get_partition_point(ordering, attr_usage_matrix, query_freq_matrix, query_cost_matrix)
 
     print(f'Split point without SHIFT operation is {point}')
 
@@ -49,10 +49,12 @@ def main(file: str):
     print(f'TA = {TA}')
     print(f'BA = {BA}')
 
-    shift, point = get_shifted_point(clustered_attr_matrix, attr_usage_matrix, query_freq_matrix, query_cost_matrix)
+    shift, point = get_shifted_point(ordering, attr_usage_matrix, query_freq_matrix, query_cost_matrix)
 
     print(f'Split point with SHIFT = {shift} operation is {point}')
 
+    # shift left by `-shift`
+    ordering = np.roll(ordering, -shift)
     TA = ordering[:point + 1]
     BA = ordering[point + 1:]
 

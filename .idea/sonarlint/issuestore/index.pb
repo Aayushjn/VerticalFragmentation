@@ -22,3 +22,5 @@ I
 VerticalFragmentation.iml,1/e/1eff440a28f461c02dfcca1ccc909775d428e295
 <
 partition.py,3/d/3d7669c766c088ee879c86eee97828b21064620c
+S
+#.idea/sonarlint/issuestore/index.pb,9/f/9fe84ebb15faf917b7def6236dba604453cc61e0

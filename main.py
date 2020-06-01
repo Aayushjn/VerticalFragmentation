@@ -3,7 +3,7 @@ import sys
 import numpy as np
 
 from bea import get_attribute_affinity_matrix, bond_energy_algorithm
-from partition import get_partition_point
+from partition import get_partition_point, get_shifted_point
 
 
 def main(file: str):
@@ -41,8 +41,23 @@ def main(file: str):
 
     point = get_partition_point(clustered_attr_matrix, attr_usage_matrix, query_freq_matrix, query_cost_matrix)
 
+    print(f'Split point without SHIFT operation is {point}')
+
     TA = ordering[:point + 1]
     BA = ordering[point + 1:]
+
+    print(f'TA = {TA}')
+    print(f'BA = {BA}')
+
+    shift, point = get_shifted_point(clustered_attr_matrix, attr_usage_matrix, query_freq_matrix, query_cost_matrix)
+
+    print(f'Split point with SHIFT = {shift} operation is {point}')
+
+    TA = ordering[:point + 1]
+    BA = ordering[point + 1:]
+
+    print(f'TA = {TA}')
+    print(f'BA = {BA}')
 
 
 if __name__ == '__main__':

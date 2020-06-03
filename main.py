@@ -45,7 +45,12 @@ def main(file: str):
 
     TA = ordering[:point + 1]
     BA = ordering[point + 1:]
+    if 0 not in TA:
+        TA = np.insert(TA, 0, 0)
+    elif 0 not in BA:
+        BA = np.insert(BA, 0, 0)
 
+    print('Assuming the 1st attribute as the PK, we have')
     print(f'TA = {TA}')
     print(f'BA = {BA}')
 
@@ -57,7 +62,12 @@ def main(file: str):
     ordering = np.roll(ordering, -shift)
     TA = ordering[:point + 1]
     BA = ordering[point + 1:]
+    if 0 not in TA:
+        TA = np.insert(TA, 0, 0)
+    elif 0 not in BA:
+        BA = np.insert(BA, 0, 0)
 
+    print('Assuming the 1st attribute as the PK, we have')
     print(f'TA = {TA}')
     print(f'BA = {BA}')
 

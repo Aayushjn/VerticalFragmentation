@@ -14,7 +14,7 @@ def get_query_set(attributes: np.ndarray, usage: np.ndarray, strict: bool = True
     :param strict: flag for specifying the type of constraint used
     :return: list of queries accessing attributes
     """
-    def constraint(index: int):
+    def constraint(index: int) -> bool:
         """
         Defines the constraint for strict and non-strict mode
 
@@ -62,7 +62,7 @@ def z_cost(x: int, ordering: np.ndarray, usage: np.ndarray, freq: np.ndarray, co
 
     TQ = get_query_set(TA, usage)
     BQ = get_query_set(BA, usage)
-    OQ = get_query_set(np.append(TA, BA), usage, False)
+    OQ = get_query_set(ordering, usage, False)
 
     CTQ, CBQ, COQ = 0, 0, 0
     for i in range(len(TQ)):
